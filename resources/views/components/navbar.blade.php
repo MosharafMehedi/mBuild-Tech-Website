@@ -1,22 +1,22 @@
-{{-- Navbar: Solid White → Light Gray on scroll --}}
+{{-- Navbar: Solid White, fixed compact height, hides on scroll down / shows on scroll up --}}
 <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16 md:h-20">
+        <div id="navbar-inner" class="flex items-center justify-between h-16 transition-all duration-300">
 
             {{-- Logo --}}
             <a href="{{ route('home') }}" class="flex items-center shrink-0">
-                <img class="h-16 w-auto object-contain" src="{{ asset('images/logo.png') }}" alt="mBuild Tech Logo">
+                <img id="navbar-logo" class="h-12 w-auto object-contain transition-all duration-300" src="{{ asset('images/logo.png') }}" alt="mBuild Tech Logo">
             </a>
 
             {{-- Desktop nav --}}
             <div class="hidden md:flex items-center gap-7">
                 <a href="{{ route('home') }}"
-                    class="text-gray-800 hover:text-brand font-bold text-md transition-colors">Home</a>
+                    class="nav-link relative text-gray-800 hover:text-brand font-bold text-md transition-colors py-2">Home</a>
 
                 {{-- About Us dropdown --}}
                 <div class="relative group">
                     <button
-                        class="flex items-center gap-1 text-gray-800 hover:text-brand font-bold text-md transition-colors py-2">
+                        class="nav-link relative flex items-center gap-1 text-gray-800 hover:text-brand font-bold text-md transition-colors py-2">
                         About Us
                         <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@
                 {{-- Projects dropdown --}}
                 <div class="relative group">
                     <button
-                        class="flex items-center gap-1 text-gray-800 hover:text-brand font-bold text-md transition-colors py-2">
+                        class="nav-link relative flex items-center gap-1 text-gray-800 hover:text-brand font-bold text-md transition-colors py-2">
                         Projects
                         <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
@@ -56,10 +56,10 @@
                 </div>
 
                 <a href="{{ route('blog.index') }}"
-                    class="text-gray-800 hover:text-brand font-bold text-md transition-colors">Blog</a>
+                    class="nav-link relative text-gray-800 hover:text-brand font-bold text-md transition-colors py-2">Blog</a>
                 <a href="{{ route('contact') }}"
-                    class="text-gray-800 hover:text-brand font-bold text-md
-                     transition-colors">Contact Us</a>
+                    class="nav-link relative text-gray-800 hover:text-brand font-bold text-md
+                     transition-colors py-2">Contact Us</a>
             </div>
 
             {{-- CTA --}}
@@ -100,12 +100,36 @@
     </div>
 </nav>
 
+<style>
+    /* Animated underline on hover for the desktop nav links */
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background-color: var(--brand-color, #f59e0b);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.25s ease;
+    }
+    .nav-link:hover::after {
+        transform: scaleX(1);
+    }
+
+    /* Hide navbar when scrolling down, reveal when scrolling back up */
+    #navbar.navbar-hidden {
+        transform: translateY(-100%);
+    }
+</style>
+
 <script>
     function toggleMenu() {
         const menu = document.getElementById('mobile-menu');
         const openIcon = document.getElementById('icon-open');
         const closeIcon = document.getElementById('icon-close');
-        
+
         if (menu.style.maxHeight === '0px' || menu.style.maxHeight === '') {
             menu.style.maxHeight = '400px';
             openIcon.classList.add('hidden');
@@ -117,15 +141,39 @@
         }
     }
 
-    // Scroll effect for background color change
-    window.addEventListener('scroll', () => {
+    // Scroll effect: background color change (kept from original)
+    //   + hide navbar on scroll down, show it again on scroll up
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    function updateNavbarOnScroll() {
         const navbar = document.getElementById('navbar');
-        if (window.scrollY > 60) {
+        const currentScrollY = window.scrollY;
+
+        // Background color swap
+        if (currentScrollY > 60) {
             navbar.classList.remove('bg-white');
             navbar.classList.add('bg-gray-100');
         } else {
             navbar.classList.remove('bg-gray-100');
             navbar.classList.add('bg-white');
         }
-    });
+
+        // Hide on scroll down, show on scroll up (only past 100px so it stays put near the top)
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            navbar.classList.add('navbar-hidden');
+        } else {
+            navbar.classList.remove('navbar-hidden');
+        }
+
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(updateNavbarOnScroll);
+            ticking = true;
+        }
+    }, { passive: true });
 </script>

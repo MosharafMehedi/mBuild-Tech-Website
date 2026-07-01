@@ -121,7 +121,7 @@
 
 
 {{-- ===== 4. PROJECTS GRID – INTERACTIVE TABS ===== --}}
-<section id="projects" class="py-20 bg-white">
+<section id="projects" class="py-8 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
             <div class="fade-in">

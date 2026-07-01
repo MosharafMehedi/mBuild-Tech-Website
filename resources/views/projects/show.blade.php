@@ -173,7 +173,7 @@
         <div class="space-y-6">
 
             {{-- Quick info card --}}
-            <div class="bg-dark-2 rounded-2xl p-6 top-28 space-y-4 fade-in">
+            <div class="md:mt-12 bg-dark-2 rounded-2xl p-6 top-28 space-y-4 fade-in">
                 <h3 class="font-heading font-bold text-white text-lg">Project At a Glance</h3>
                 <div class="space-y-3 border-t border-white/10 pt-4">
                     @foreach([
