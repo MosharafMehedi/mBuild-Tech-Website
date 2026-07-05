@@ -13,29 +13,39 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->string('slug', 255)->unique();
-            $table->enum('classification', ['residential', 'commercial', 'industrial']);
-            $table->enum('status', ['completed', 'ongoing', 'upcoming'])->default('ongoing');
-
-            $table->string('land_area', 100)->nullable();
-            $table->string('storied_metrics', 100)->nullable();
-            $table->integer('units')->nullable()->default(0);
+            $table->string('name');
+            $table->string('slug')->unique();
+            
+            $table->enum('classification', ['residential', 'commercial', 'industrial'])->default('residential');
+            $table->enum('status', ['ongoing', 'completed', 'upcoming'])->default('ongoing');
+            
+            $table->integer('progress_foundation')->default(0)->nullable();
+            $table->integer('progress_casting')->default(0)->nullable();
+            $table->integer('progress_finishing')->default(0)->nullable();
+            
+            $table->text('description'); 
+            $table->longText('body')->nullable();
+            
+            $table->string('location');
+            $table->string('address')->nullable();
+            $table->string('plot_size')->nullable();
+            $table->integer('floors')->nullable();
+            $table->integer('units')->nullable();
+            $table->string('size_range')->nullable();
+            $table->string('price_range')->nullable();
             $table->date('handover_date')->nullable();
-
-            $table->integer('progress_foundation')->default(0);
-            $table->integer('progress_casting')->default(0);
-            $table->integer('progress_finishing')->default(0);
-
-            $table->string('location', 255);
-            $table->text('map_embed_url')->nullable();
-            $table->string('cover_image', 255)->nullable();
-            $table->json('gallery_images')->nullable();
-            $table->string('brochure_path', 255)->nullable();
-
-            $table->string('meta_title', 255)->nullable();
+            $table->string('rajuk_no')->nullable();
+            
+            $table->json('amenities')->nullable();
+            $table->json('gallery')->nullable();
+            $table->string('cover_image')->nullable();
+            
+            $table->enum('visibility', ['public', 'draft'])->default('public');
+            $table->boolean('is_featured')->default(false);
+            
+            $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
-
+            
             $table->timestamps();
             $table->softDeletes();
         });
