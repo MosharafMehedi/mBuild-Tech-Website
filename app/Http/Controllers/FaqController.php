@@ -12,9 +12,9 @@ class FaqController extends Controller
         $query = Faq::query();
 
         if ($request->filled('search')) {
-            $query->where(function($q) use ($request) {
+            $query->where(function ($q) use ($request) {
                 $q->where('question', 'like', '%' . $request->search . '%')
-                  ->orWhere('answer', 'like', '%' . $request->search . '%');
+                    ->orWhere('answer', 'like', '%' . $request->search . '%');
             });
         }
 
@@ -24,7 +24,7 @@ class FaqController extends Controller
 
         $faqs = $query->orderBy('sort_order')->paginate(15);
         $categories = Faq::distinct()->pluck('category')->filter();
-        
+
         return view('admin.faqs.index', compact('faqs', 'categories'));
     }
 
@@ -38,7 +38,7 @@ class FaqController extends Controller
 
         $faqs = $query->get();
         $categories = Faq::where('is_active', true)->distinct()->pluck('category')->filter();
-        
+
         return view('faq.index', compact('faqs', 'categories'));
     }
 
@@ -59,7 +59,7 @@ class FaqController extends Controller
         ]);
 
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
-        
+
         if (empty($validated['sort_order'])) {
             $validated['sort_order'] = Faq::max('sort_order') + 1;
         }
@@ -102,14 +102,14 @@ class FaqController extends Controller
         return back()->with('success', 'FAQ deleted successfully!');
     }
 
-public function toggle($id)
-{
-    $faq = Faq::findOrFail($id);
-    
-    $faq->update([
-        'is_active' => !$faq->is_active
-    ]);
+    public function toggle($id)
+    {
+        $faq = Faq::findOrFail($id);
 
-    return back()->with('success', 'FAQ status updated successfully!');
-}
+        $faq->update([
+            'is_active' => !$faq->is_active
+        ]);
+
+        return back()->with('success', 'FAQ status updated successfully!');
+    }
 }

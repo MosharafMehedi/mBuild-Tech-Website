@@ -458,29 +458,25 @@ $posts = [
             <p class="text-brand font-heading font-semibold text-xs uppercase tracking-widest mb-2">Frequently Asked Questions</p>
             <h2 class="font-heading font-black text-3xl md:text-4xl text-dark">FAQ</h2>
         </div>
+
         <div class="space-y-3 fade-in">
-            @php
-            $faqs = [
-                ['q'=>'What are the payment plans for mBuild Tech projects?',                    'a'=>'We offer flexible payment schedules including down payment + instalment plans during construction, full payment discounts, and bank loan facilitation through our partner banks. Our sales team will share a customised plan based on your selected unit.'],
-                ['q'=>'Are all mBuild Tech projects RAJUK/CDA approved?',                        'a'=>'Yes. Every project undertaken by mBuild Tech holds full RAJUK (for Dhaka) or CDA (for Chittagong) approval before construction commences. We maintain strict regulatory compliance throughout the build cycle.'],
-                ['q'=>'How does mBuild Tech ensure structural earthquake resistance?',            'a'=>'Our structural engineers design all buildings to Bangladesh National Building Code (BNBC) seismic standards. We use ductile reinforced concrete frames, seismic-grade steel from BSRM, and third-party structural audits at every major construction milestone.'],
-                ['q'=>'What quality certifications does mBuild Tech hold?',                      'a'=>'mBuild Tech is a REHAB member and follows ISO 9001-aligned internal quality management processes. All materials used are tested at BUET-certified labs, and we provide material test certificates to every buyer upon request.'],
-                ['q'=>'Can I book a site visit before making a purchase decision?',              'a'=>'Absolutely. We encourage all prospective buyers to visit the active construction or completed site. Please contact our sales team via the form below or call +880 1711-123456 to schedule a guided visit at your convenience.'],
-            ];
-            @endphp
-            @foreach($faqs as $i => $faq)
+            @forelse($faqs as $faq)
             <div class="border border-gray-200 rounded-xl overflow-hidden">
-                <button class="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-light transition-colors" onclick="toggleFaq({{ $i }})">
-                    <span class="font-heading font-semibold text-dark text-sm md:text-base pr-4">{{ $faq['q'] }}</span>
-                    <svg class="faq-icon w-5 h-5 text-brand shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button class="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-light transition-colors" onclick="toggleFaq({{ $faq->id }})">
+                    <span class="font-heading font-semibold text-dark text-sm md:text-base pr-4">{{ $faq->question }}</span>
+                    <svg class="faq-icon w-5 h-5 text-brand shrink-0 transition-transform duration-200" id="icon-{{ $faq->id }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                     </svg>
                 </button>
-                <div class="faq-answer" id="faq-{{ $i }}">
-                    <p class="px-6 pb-5 text-muted text-sm leading-relaxed">{{ $faq['a'] }}</p>
+                <div class="faq-answer bg-gray-50/50" id="faq-{{ $faq->id }}">
+                    <p class="px-6 pb-5 text-muted text-sm leading-relaxed border-t border-gray-100/50 pt-3">{{ $faq->answer }}</p>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="text-center py-10 border border-dashed border-gray-200 rounded-xl">
+                <p class="text-muted text-sm">No FAQs available at the moment.</p>
+            </div>
+            @endforelse
         </div>
     </div>
 </section>

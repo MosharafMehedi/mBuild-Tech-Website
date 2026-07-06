@@ -2,14 +2,15 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Models\Project;
 use App\Models\Blog;
+use App\Models\Contact_us;
 use App\Models\Faq;
 use App\Models\Metric;
-use App\Models\Contact_us;
+use App\Models\Project;
+use App\Models\Testimonial;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -207,5 +208,25 @@ class DatabaseSeeder extends Seeder
             'status' => 'unread',
             'read_at' => null
         ]);
+
+        // ---- Sample Testimonials ----
+        Testimonial::truncate();
+        Testimonial::create([
+                'name'          => 'Md. Rafiqul Islam',
+                'role'          => 'CEO, RFL Group Bangladesh',
+                'text'          => 'mBuild Tech transformed our commercial vision into reality. The structural quality and on-time delivery far exceeded our expectations.',
+                'stars'         => 5,
+                'display_order' => 1,
+                'is_active'     => true,
+            ]);
+        Testimonial::create([
+               'name'          => 'Tahmina Begum',
+                'role'          => 'Property Owner, Gulshan',
+                'text'          => 'From the first consultation to key handover, every team member was professional, transparent, and genuinely invested in our needs.',
+                'stars'         => 5,
+                'display_order' => 2,
+                'is_active'     => true,
+            ]);
+
     }
 }

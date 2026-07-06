@@ -1,13 +1,15 @@
 <?php
 
+use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MetricController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn() => view('home'))->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // About Us
 Route::get('/about', fn() => view('about.index'))->name('about');
@@ -80,3 +82,10 @@ Route::resource('contacts', ContactUsController::class)->names([
     'destroy' => 'admin.contacts.destroy',
 ]);
 Route::post('/contacts/{id}/mark-read', [ContactUsController::class, 'markRead'])->name('admin.contacts.mark-read');
+
+//Testimonials Admin
+    Route::get('/testimonials',                          [TestimonialController::class, 'index'])->name('admin.testimonials.index');
+    Route::post('/testimonials',                         [TestimonialController::class, 'store'])->name('admin.testimonials.store');
+    Route::put('/testimonials/{testimonial}',            [TestimonialController::class, 'update'])->name('admin.testimonials.update');
+    Route::patch('/testimonials/{testimonial}/toggle',   [TestimonialController::class, 'toggle'])->name('admin.testimonials.toggle');
+    Route::delete('/testimonials/{testimonial}',         [TestimonialController::class, 'destroy'])->name('admin.testimonials.destroy');
