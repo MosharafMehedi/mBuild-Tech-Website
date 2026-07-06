@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\MetricController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,20 +22,10 @@ Route::get('/blog/{slug}', fn($slug) => view('blog.show', compact('slug')))->nam
 
 // Contact
 Route::get('/contact', fn() => view('contact.index'))->name('contact');
-Route::post('/contact', function (\Illuminate\Http\Request $request) {
-    $request->validate([
-        'name'         => 'required|string|max:255',
-        'email'        => 'required|email',
-        'phone'        => 'nullable|string|max:20',
-        'inquiry_type' => 'required|string',
-        'message'      => 'required|string|max:3000',
-    ]);
+Route::post('/contact', [ContactUsController::class, 'store'])->name('contact.submit');
 
     // TODO: Send email to CRM
     // Mail::to('info@mbuildtech.com.bd')->send(new \App\Mail\ContactMail($request->all()));
-
-    return back()->with('success', 'Thank you! Your message has been received. Our team will contact you within 24 hours.');
-})->name('contact.submit');
 
 Route::get('/dashboard', function () {
     return view('admin/dashboard');
@@ -47,5 +41,42 @@ Route::resource('admin/projects', ProjectController::class)->names([
     'destroy' => 'admin.projects.destroy',
 ]);
 
-// ফ্রন্টএন্ডে সিঙ্গেল প্রোজেক্ট ভিউ করার জন্য এই রাউটটি (যা index.blade এ view on site বাটনে ব্যবহার করা হয়েছে)
-Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
+// Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
+
+Route::resource('admin/blogs', BlogController::class)->names([
+    'index'   => 'admin.blogs.index',
+    'create'  => 'admin.blogs.create',
+    'store'   => 'admin.blogs.store',
+    'edit'    => 'admin.blogs.edit',
+    'update'  => 'admin.blogs.update',
+    'destroy' => 'admin.blogs.destroy',
+]);
+
+// FAQs Admin
+Route::patch('admin/faqs/{id}/toggle', [FaqController::class, 'toggle'])->name('admin.faqs.toggle');
+Route::resource('admin/faqs', FaqController::class)->names([
+    'index'   => 'admin.faqs.index',
+    'create'  => 'admin.faqs.create',
+    'store'   => 'admin.faqs.store',
+    'edit'    => 'admin.faqs.edit',
+    'update'  => 'admin.faqs.update',
+    'destroy' => 'admin.faqs.destroy',
+]);
+
+// Metrics Admin
+Route::resource('metrics', MetricController::class)->names([
+    'index'   => 'admin.metrics.index',
+    'create'  => 'admin.metrics.create',
+    'store'   => 'admin.metrics.store',
+    'edit'    => 'admin.metrics.edit',
+    'update'  => 'admin.metrics.update',
+    'destroy' => 'admin.metrics.destroy',
+]);
+
+// Contacts Admin
+Route::resource('contacts', ContactUsController::class)->names([
+    'index'   => 'admin.contacts.index',
+    'show'    => 'admin.contacts.show',
+    'destroy' => 'admin.contacts.destroy',
+]);
+Route::post('/contacts/{id}/mark-read', [ContactUsController::class, 'markRead'])->name('admin.contacts.mark-read');

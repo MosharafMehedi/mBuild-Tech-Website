@@ -4,7 +4,6 @@
 @section('breadcrumb', 'Admin / Projects / ' . (isset($project) ? 'Edit' : 'Create'))
 
 @section('content')
-{{-- গ্লোবাল ভ্যালিডেশন এরর মেসেজ ডিসপ্লে --}}
 @if($errors->any())
 <div class="mb-5 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm">
     <p class="font-semibold mb-1">Please fix the following errors:</p>
@@ -254,7 +253,6 @@
         </div>
     </div>
 
-    {{-- সাবমিট বাটন সেকশন (সম্পূর্ণ সাধারণ ফ্লো-তে ফর্মের একদম নিচে বসানো হয়েছে, কোন স্টিকি বা ফিক্সড পজিশন নেই) --}}
     <div class="mt-8 pt-5 border-t border-gray-100 flex items-center justify-end gap-3">
         <a href="{{ route('admin.projects.index') }}" class="px-6 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-dark hover:bg-gray-50 transition-colors">
             Cancel Action
@@ -279,7 +277,6 @@ function addAmenity() {
     div.querySelector('input').focus();
 }
 
-// কভার ইমেজ প্রিভিউ
 function previewSingleImage(input, previewId) {
     const preview = document.getElementById(previewId);
     if (input.files && input.files[0]) {
@@ -292,7 +289,6 @@ function previewSingleImage(input, previewId) {
     }
 }
 
-// গ্যালারি ইমেজ মাল্টিপল ডাইনামিক লাইভ প্রিভিউ
 function previewMultipleImages(input, containerId) {
     const container = document.getElementById(containerId);
     container.innerHTML = ""; 

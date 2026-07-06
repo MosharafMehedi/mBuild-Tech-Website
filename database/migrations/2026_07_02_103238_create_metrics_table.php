@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('metrics', function (Blueprint $table) {
-                $table->id();
-                $table->string('metric_key', 100)->unique();
-                $table->string('coefficient', 50);
-                $table->string('label', 255); 
-                $table->integer('sort_order')->default(0);
-                $table->timestamps();
-            });
+            $table->id();
+            $table->string('label', 255);
+            $table->string('value', 50);
+            $table->string('suffix', 10);
+            $table->text('icon');
+            $table->integer('sort_order')->default(0);
+            $table->timestamps();
+        });
     }
 
     /**

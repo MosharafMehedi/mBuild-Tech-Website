@@ -133,24 +133,22 @@
             </button>
             <div class="submenu pl-8 space-y-1 {{ request()->routeIs('admin.projects*') ? 'open' : '' }}" id="projects-sub">
                 <a href="{{ route('admin.projects.index') }}" class="block text-white/50 hover:text-brand text-sm py-1.5 px-2 rounded-lg hover:bg-brand/10 transition-colors {{ request()->routeIs('admin.projects.index') ? 'text-brand' : '' }}">All Projects</a>
-                {{-- <a href="{{ route('admin.projects.create') }}" class="block text-white/50 hover:text-brand text-sm py-1.5 px-2 rounded-lg hover:bg-brand/10 transition-colors">Add New</a> --}}
             </div>
         </div>
 
         {{-- Blog --}}
-        {{-- <div>
+        <div>
             <button onclick="toggleSubmenu('blog-sub')" class="nav-item w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.blog*') ? 'active text-brand' : '' }}">
                 <span class="flex items-center gap-3">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     Blog Posts
                 </span>
-                <svg class="submenu-arrow w-4 h-4 {{ request()->routeIs('admin.blog*') ? 'open' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <svg class="submenu-arrow w-4 h-4 {{ request()->routeIs('admin.blogs*') ? 'open' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
-            <div class="submenu pl-8 space-y-1 {{ request()->routeIs('admin.blog*') ? 'open' : '' }}" id="blog-sub">
-                <a href="{{ route('admin.blog.index') }}" class="block text-white/50 hover:text-brand text-sm py-1.5 px-2 rounded-lg hover:bg-brand/10 transition-colors">All Posts</a>
-                <a href="{{ route('admin.blog.create') }}" class="block text-white/50 hover:text-brand text-sm py-1.5 px-2 rounded-lg hover:bg-brand/10 transition-colors">Add New</a>
+            <div class="submenu pl-8 space-y-1 {{ request()->routeIs('admin.blogs*') ? 'open' : '' }}" id="blog-sub">
+                <a href="{{ route('admin.blogs.index') }}" class="block text-white/50 hover:text-brand text-sm py-1.5 px-2 rounded-lg hover:bg-brand/10 transition-colors">All Posts</a>
             </div>
-        </div> --}}
+        </div>
 
         {{-- Leads --}}
         {{-- <a href="{{ route('admin.leads.index') }}" class="nav-item flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.leads*') ? 'active text-brand' : '' }}">
@@ -161,37 +159,19 @@
             <span class="bg-brand text-white text-xs font-bold px-2 py-0.5 rounded-full">12</span>
         </a> --}}
 
-        <div class="pt-3 pb-1 px-3">
-            <p class="text-white/25 text-xs uppercase tracking-widest font-heading font-semibold">Website Data</p>
-        </div>
-
-        {{-- Team --}}
-        {{-- <a href="{{ route('admin.team.index') }}" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.team*') ? 'active text-brand' : '' }}">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            Team Members
-        </a> --}}
-
-        {{-- Testimonials --}}
-        {{-- <a href="{{ route('admin.testimonials.index') }}" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.testimonials*') ? 'active text-brand' : '' }}">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-            Testimonials
-        </a> --}}
-
-        {{-- Partners --}}
-        {{-- <a href="{{ route('admin.partners.index') }}" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.partners*') ? 'active text-brand' : '' }}">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-            Partner Logos
-        </a> --}}
-
         {{-- FAQs --}}
-        {{-- <a href="{{ route('admin.faqs.index') }}" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.faqs*') ? 'active text-brand' : '' }}">
+        <a href="{{ route('admin.faqs.index') }}" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.faqs*') ? 'active text-brand' : '' }}">
             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             FAQs
-        </a> --}}
-
-        <div class="pt-3 pb-1 px-3">
-            <p class="text-white/25 text-xs uppercase tracking-widest font-heading font-semibold">System</p>
-        </div>
+        </a>
+        <a href="{{ route('admin.metrics.index') }}" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.metrics*') ? 'active text-brand' : '' }}">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 ２v14a２ ２ ０ ０１－２ ２h－２a２ ２ ０ ０１－２－２z"/></svg>
+            Metrics
+        </a>
+        <a href="{{ route('admin.contacts.index') }}" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.contacts*') ? 'active text-brand' : '' }}">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            Contacts
+        </a>
 
         {{-- Settings --}}
         {{-- <a href="{{ route('admin.settings') }}" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.settings') ? 'active text-brand' : '' }}">

@@ -30,7 +30,6 @@
 </head>
 <body class="bg-[#1e1c1b] font-sans min-h-screen flex flex-col justify-center items-center p-4 sm:p-6 md:p-8">
 
-    <!-- Main Container: মোবাইলে full width, sm স্ক্রিন থেকে max-w-md হবে -->
     <div class="w-full sm:max-w-md bg-[#2a2726] border border-white/5 rounded-2xl p-6 sm:p-8 shadow-xl">
         
         <!-- Logo & Header -->

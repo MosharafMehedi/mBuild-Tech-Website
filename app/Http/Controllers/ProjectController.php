@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
-    // ১. ইনডেক্স মেথড (প্রোজেক্ট লিস্ট দেখানোর জন্য)
     public function index(Request $request)
     {
         $query = Project::query();
@@ -28,13 +27,11 @@ class ProjectController extends Controller
         return view('admin.projects.index', compact('projects'));
     }
 
-    // ২. ক্রিয়েট মেথড (ফর্ম দেখানোর জন্য)
     public function create()
     {
         return view('admin.projects.form');
     }
 
-    // ৩. স্টোর মেথড (নতুন প্রোজেক্ট ডাটাবেজে সেভ করার জন্য)
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -66,18 +63,14 @@ class ProjectController extends Controller
             'gallery.*'           => 'image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
-        // চেকবক্স হ্যান্ডেলিং
         $validated['is_featured'] = $request->has('is_featured');
         
-        // Amenities জেসন ফরম্যাটে রূপান্তর
         $validated['amenities'] = json_encode($request->input('amenities', []));
 
-        // Cover Image আপলোড লজিক
         if ($request->hasFile('cover_image')) {
             $validated['cover_image'] = $request->file('cover_image')->store('projects/covers', 'public');
         }
 
-        // Gallery মাল্টিপল ইমেজ আপলোড লজিক
         if ($request->hasFile('gallery')) {
             $galleryPaths = [];
             foreach ($request->file('gallery') as $file) {
@@ -91,14 +84,12 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully!');
     }
 
-    // ৪. এডিট মেথড (ডাটা সহ এডিট ফর্ম দেখানোর জন্য)
     public function edit($id)
     {
         $project = Project::findOrFail($id);
         return view('admin.projects.form', compact('project'));
     }
 
-    // ৫. আপডেট মেথড (বিদ্যমান প্রোজেক্ট ডাটাবেজে আপডেট করার জন্য)
     public function update(Request $request, $id)
     {
         $project = Project::findOrFail($id);
@@ -135,7 +126,6 @@ class ProjectController extends Controller
         $validated['is_featured'] = $request->has('is_featured');
         $validated['amenities'] = json_encode($request->input('amenities', []));
 
-        // নতুন Cover Image আসলে আগের ইমেজ ডিলিট করে আপডেট করবে
         if ($request->hasFile('cover_image')) {
             if ($project->cover_image) {
                 Storage::disk('public')->delete($project->cover_image);
@@ -143,9 +133,7 @@ class ProjectController extends Controller
             $validated['cover_image'] = $request->file('cover_image')->store('projects/covers', 'public');
         }
 
-        // নতুন Gallery ইমেজ আসলে আগেরগুলোর সাথে মার্জ বা রিপ্লেস করা (এখানে রিপ্লেস লজিক দেওয়া হলো)
         if ($request->hasFile('gallery')) {
-            // পুরনো গ্যালারি ইমেজ ডিলিট করা
             if ($project->gallery) {
                 $oldGallery = json_decode($project->gallery, true) ?: [];
                 foreach ($oldGallery as $oldImg) {
@@ -165,12 +153,10 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully!');
     }
 
-    // ৬. ডিস্ট্রয় মেথড (প্রোজেক্ট ডিলিট করার জন্য)
     public function destroy($id)
     {
         $project = Project::findOrFail($id);
 
-        // সব ইমেজ স্টোরেজ থেকে ডিলিট করা
         if ($project->cover_image) {
             Storage::disk('public')->delete($project->cover_image);
         }
@@ -187,7 +173,6 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully!');
     }
 
-    // ৭. শো মেথড (ফ্রন্টএন্ড সিঙ্গেল ভিউ)
     public function show($slug)
     {
         $project = Project::where('slug', $slug)->firstOrFail();
