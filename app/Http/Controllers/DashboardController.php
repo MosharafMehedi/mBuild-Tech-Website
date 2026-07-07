@@ -1,9 +1,10 @@
 <?php
-
+namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\Contact_us;
 use App\Models\Project;
+use App\Models\User;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -20,6 +21,8 @@ class DashboardController extends Controller
 
         $totalBlogs = Blog::count();
         $newBlogsThisMonth = Blog::where('created_at', '>=', Carbon::now()->startOfMonth())->count();
+
+        $totalTeam = User::count();
 
         return view('admin.dashboard', compact(
             'totalProjects',

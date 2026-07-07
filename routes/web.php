@@ -4,6 +4,7 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MetricController;
 use App\Http\Controllers\ProjectController;
@@ -29,10 +30,7 @@ Route::post('/contact', [ContactUsController::class, 'store'])->name('contact.su
     // TODO: Send email to CRM
     // Mail::to('info@mbuildtech.com.bd')->send(new \App\Mail\ContactMail($request->all()));
 
-Route::get('/dashboard', function () {
-    return view('admin/dashboard');
-})->middleware(['auth', 'verified'])->name('admin.dashboard');
-
+Route::get('/dashboard',[DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('admin.dashboard');
 Route::resource('admin/projects', ProjectController::class)->names([
     'index'   => 'admin.projects.index',
     'create'  => 'admin.projects.create',
