@@ -12,6 +12,9 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
+
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -34,23 +37,14 @@
         
         <!-- Logo & Header -->
         <div class="text-center mb-6 sm:mb-8">
-            <div class="inline-flex w-12 h-12 bg-brand rounded-xl items-center justify-center mb-4 shadow-lg shadow-brand/10">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M3 3h4v18H3V3zm7 0h4v18h-4V3zm7 6h4v12h-4V9z"/>
-                </svg>
-            </div>
+            <img 
+                src="{{ asset('images/logo.png') }}" 
+                alt="mBuild Tech" 
+                class="h-12 sm:h-14 mx-auto mb-5 object-contain"
+            >
             <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Welcome Back</h2>
             <p class="text-white/50 text-xs sm:text-sm mt-1">Sign in to your dashboard</p>
         </div>
-
-        <!-- Session Status / Errors (If Laravel) -->
-        <!-- 
-        @if($errors->any())
-        <div class="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl px-4 py-3 mb-5">
-            {{ $errors->first() }}
-        </div>
-        @endif 
-        -->
 
         <!-- Login Form -->
         <form method="POST" action="#" class="space-y-4 sm:space-y-5">
@@ -104,6 +98,25 @@
         </div>
 
     </div>
+
+    <!-- SweetAlert: Sign In Error -->
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Sign In Failed',
+                text: @json($errors->first()),
+                confirmButtonColor: '#ab5e40',
+                background: '#2a2726',
+                color: '#ffffff',
+                customClass: {
+                    popup: 'rounded-2xl'
+                }
+            });
+        });
+    </script>
+    @endif
 
 </body>
 
