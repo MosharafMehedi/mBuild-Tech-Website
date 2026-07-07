@@ -6,7 +6,6 @@
 @section('content')
 <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
     <div class="flex gap-2">
-        {{-- স্ট্যাটাস ফিল্টারিং লিংক --}}
         @foreach(['All', 'Active', 'Inactive'] as $f)
         @php $slugStatus = strtolower($f); @endphp
         <a href="{{ route('admin.faqs.index', ['status' => $slugStatus !== 'all' ? $slugStatus : null]) }}" 
@@ -17,22 +16,14 @@
         @endforeach
     </div>
     
-    {{-- Add New FAQ বাটন --}}
     <a href="{{ route('admin.faqs.create') }}" class="flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-heading font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
         Add New FAQ
     </a>
 </div>
 
-{{-- সাকসেস মেসেজ অ্যালার্ট --}}
-@if(session('success'))
-<div class="mb-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl text-sm font-medium">
-    {{ session('success') }}
-</div>
-@endif
 
 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-    {{-- ফিল্টার এবং সার্চ ফর্ম --}}
     <form action="{{ route('admin.faqs.index') }}" method="GET" class="px-5 py-4 border-b border-gray-100 flex flex-wrap items-center gap-3">
         @if(request('status'))
             <input type="hidden" name="status" value="{{ request('status') }}">
@@ -71,7 +62,6 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-50">
-                {{-- ডাটাবেজ থেকে আসা FAQ লুপ --}}
                 @forelse($faqs as $faq)
                 <tr>
                     <td class="px-5 py-3.5">
@@ -99,11 +89,9 @@
                     </td>
                     <td class="px-5 py-3.5">
                         <div class="flex items-center justify-end gap-2">
-                            {{-- Edit বাটন --}}
                             <a href="{{ route('admin.faqs.edit', $faq->id) }}" class="p-1.5 text-muted hover:text-brand hover:bg-brand-light rounded-lg transition-colors" title="Edit">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                             </a>
-                            {{-- Toggle Status বাটন --}}
                             <button onclick="toggleStatus('{{ route('admin.faqs.toggle', $faq->id) }}')" class="p-1.5 text-muted hover:text-{{ $faq->is_active ? 'yellow' : 'green' }}-600 hover:bg-{{ $faq->is_active ? 'yellow' : 'green' }}-50 rounded-lg transition-colors" title="{{ $faq->is_active ? 'Deactivate' : 'Activate' }}">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     @if($faq->is_active)
@@ -113,7 +101,6 @@
                                     @endif
                                 </svg>
                             </button>
-                            {{-- Delete বাটন --}}
                             <button onclick="openDeleteModal('{{ route('admin.faqs.destroy', $faq->id) }}')" class="p-1.5 text-muted hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                             </button>
@@ -129,7 +116,6 @@
         </table>
     </div>
 
-    {{-- লারাভেল ডায়নামিক পেজিনেশন লিঙ্ক --}}
     <div class="px-5 py-4 border-t border-gray-100 flex items-center justify-between">
         <p class="text-muted text-sm">
             Showing <strong class="text-dark">{{ $faqs->firstItem() ?? 0 }}</strong> to <strong class="text-dark">{{ $faqs->lastItem() ?? 0 }}</strong> of <strong class="text-dark">{{ $faqs->total() }}</strong> FAQs
@@ -140,7 +126,6 @@
     </div>
 </div>
 
-{{-- Delete confirm modal (ডায়নামিক ফর্ম সহ) --}}
 <div id="delete-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
         <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mx-auto mb-4">
@@ -149,7 +134,6 @@
         <h3 class="font-heading font-bold text-dark text-lg text-center mb-2">Delete FAQ?</h3>
         <p class="text-muted text-sm text-center mb-6">This action will permanently delete this FAQ.</p>
         
-        {{-- এখানে ডায়নামিকালি অ্যাকশন ইউআরএল সেট হবে JS এর মাধ্যমে --}}
         <form id="delete-faq-form" method="POST" class="flex gap-3">
             @csrf
             @method('DELETE')
@@ -161,7 +145,6 @@
 
 @push('scripts')
 <script>
-// ডিলিট মডাল ওপেন এবং ডায়নামিক অ্যাকশন ইউআরএল সেট করার স্ক্রিপ্ট
 function openDeleteModal(actionUrl) {
     document.getElementById('delete-faq-form').setAttribute('action', actionUrl);
     document.getElementById('delete-modal').classList.remove('hidden');
@@ -171,7 +154,6 @@ function closeDelete() {
     document.getElementById('delete-modal').classList.add('hidden');
 }
 
-// টগল স্ট্যাটাস ফাংশন (AJAX কল)
 function toggleStatus(actionUrl) {
     if (confirm('Are you sure you want to change the status of this FAQ?')) {
         fetch(actionUrl, {

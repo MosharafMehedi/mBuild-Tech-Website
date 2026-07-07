@@ -34,12 +34,14 @@ class Project extends Model
         'visibility',
         'is_featured',
         'meta_title',
-        'meta_description'
+        'meta_description',
+        'brochure_file'
     ];
 
     protected $casts = [
         'amenities' => 'array',
         'gallery' => 'array',
         'is_featured' => 'boolean',
+        'brochure_file' => 'string'
     ];
 }

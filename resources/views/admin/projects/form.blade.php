@@ -19,7 +19,6 @@
     @csrf
     @if(isset($project)) @method('PUT') @endif
 
-    {{-- ফর্ম গ্রিড কন্টেইনার --}}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
         {{-- Main Fields --}}
@@ -55,7 +54,7 @@
                         </div>
                     </div>
 
-                    {{-- ৩টি ফেজের প্রগ্রেস ট্র্যাকিং ফিল্ডস --}}
+                    {{-- Progress Tracking --}}
                     <div class="bg-gray-50/50 p-4 rounded-xl border border-gray-100">
                         <h4 class="text-xs font-heading font-bold text-dark uppercase tracking-wider mb-3">Construction Progress Stages (%)</h4>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -87,7 +86,6 @@
                         <label class="block text-xs font-heading font-semibold text-muted uppercase tracking-wider mb-1.5">Full Details / Body Content</label>
                         <textarea name="body" rows="6" id="body-editor" placeholder="Full project details, features, developer story..."
                             class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-dark focus:outline-none focus:border-brand resize-none">{{ old('body', $project->body ?? '') }}</textarea>
-                        <p class="text-muted text-xs mt-1">Supports basic HTML. For rich editing, integrate a WYSIWYG editor (e.g. TinyMCE or Quill).</p>
                     </div>
                 </div>
             </div>
@@ -181,8 +179,8 @@
                 <div class="mb-4">
                     <label class="block text-xs font-heading font-semibold text-muted uppercase tracking-wider mb-1.5">Visibility</label>
                     <select name="visibility" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-dark focus:outline-none focus:border-brand bg-white">
-                        <option value="public" {{ old('visibility', $project->visibility ?? 'public') === 'public' ? 'selected' : '' }}>Public</option>
-                        <option value="draft" {{ old('visibility', $project->visibility ?? 'public') === 'draft' ? 'selected' : '' }}>Draft (Hidden)</option>
+                        <option value="public" {{ old('visibility', $project->visibility ?? 'public') == 'public' ? 'selected' : '' }}>Public</option>
+                        <option value="draft" {{ old('visibility', $project->visibility ?? '') == 'draft' ? 'selected' : '' }}>Draft (Hidden)</option>
                     </select>
                 </div>
                 <div class="mb-2">
@@ -248,6 +246,14 @@
                         <label class="block text-xs font-heading font-semibold text-muted uppercase tracking-wider mb-1.5">Meta Description</label>
                         <textarea name="meta_description" rows="2" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-dark focus:outline-none focus:border-brand resize-none">{{ old('meta_description', $project->meta_description ?? '') }}</textarea>
                     </div>
+                    <div>
+                    <label class="block text-xs font-heading font-semibold text-muted uppercase tracking-wider mb-1.5">Brochure File</label>
+                    <input type="file" name="brochure_file" accept=".pdf,.doc,.docx" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-dark focus:outline-none focus:border-brand"/>
+                    
+                    @if(!empty($project->brochure_file))
+                        <p class="text-xs text-brand mt-1">Current file: {{ basename($project->brochure_file) }}</p>
+                    @endif
+                </div>
                 </div>
             </div>
         </div>
@@ -307,7 +313,6 @@ function previewMultipleImages(input, containerId) {
     }
 }
 
-// Auto-generate slug from name
 document.querySelector('input[name="name"]')?.addEventListener('input', function() {
     const slugField = document.getElementById('slug-field');
     if (slugField && !slugField.dataset.manual) {

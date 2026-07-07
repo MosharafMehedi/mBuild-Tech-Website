@@ -361,7 +361,7 @@ document.getElementById('t-name').addEventListener('input', function() {
 // ---- Delete ----
 function confirmDelete(id, name) {
     document.getElementById('delete-name').textContent = name;
-    document.getElementById('delete-form').action = `/admin/testimonials/${id}`;
+    document.getElementById('delete-form').action = `/testimonials/${id}`;
     document.getElementById('delete-modal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 }

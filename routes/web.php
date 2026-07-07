@@ -15,12 +15,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', fn() => view('about.index'))->name('about');
 
 // Projects
-Route::get('/projects', fn() => view('projects.index'))->name('projects.index');
-Route::get('/projects/{slug}', fn($slug) => view('projects.show', compact('slug')))->name('projects.show');
+Route::get('/projects', [ProjectController::class, 'allProjects'])->name('projects.index');
+Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 
 // Blog
-Route::get('/blog', fn() => view('blog.index'))->name('blog.index');
-Route::get('/blog/{slug}', fn($slug) => view('blog.show', compact('slug')))->name('blog.show');
+Route::get('/blog', [BlogController::class, 'publicIndex'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 // Contact
 Route::get('/contact', fn() => view('contact.index'))->name('contact');
@@ -33,7 +33,6 @@ Route::get('/dashboard', function () {
     return view('admin/dashboard');
 })->middleware(['auth', 'verified'])->name('admin.dashboard');
 
-// প্রোজেক্টের সব CRUD রাউট (index, create, store, edit, update, destroy) এক লাইনে
 Route::resource('admin/projects', ProjectController::class)->names([
     'index'   => 'admin.projects.index',
     'create'  => 'admin.projects.create',
@@ -42,8 +41,6 @@ Route::resource('admin/projects', ProjectController::class)->names([
     'update'  => 'admin.projects.update',
     'destroy' => 'admin.projects.destroy',
 ]);
-
-// Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 
 Route::resource('admin/blogs', BlogController::class)->names([
     'index'   => 'admin.blogs.index',

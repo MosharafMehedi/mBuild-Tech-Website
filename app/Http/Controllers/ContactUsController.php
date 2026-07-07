@@ -20,7 +20,8 @@ class ContactUsController extends Controller
 
         Contact_us::create($validated);
 
-            return back()->with('success', 'Thank you! Your message has been received. Our team will contact you within 24 hours.');
+            return back()->with('success', 'Thank you! Your message has been received. Our team will contact you within 24 hours.')
+            ->withFragment('contact');
     }
 
     public function index(Request $request)

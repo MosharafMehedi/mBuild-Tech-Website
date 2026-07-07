@@ -45,6 +45,7 @@ return new class extends Migration
             
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
+            $table->string('brochure_file', 255)->nullable();
             
             $table->timestamps();
             $table->softDeletes();

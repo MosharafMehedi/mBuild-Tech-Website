@@ -56,14 +56,18 @@ class BlogController extends Controller
 
     public function show($slug)
     {
-        $blog = Blog::where('slug', $slug)->where('status', 'Published')->firstOrFail();
-        $blog->increment('views');
-        
-        $relatedBlogs = Blog::where('id', '!=', $blog->id)
-                            ->where('status', 'Published')
-                            ->where('category', $blog->category)
-                            ->limit(3)
-                            ->get();
+        $blog = Blog::where('slug', $slug)
+                ->where('status', 'Published')
+                ->firstOrFail();
+
+    $blog->increment('views');
+
+    $relatedBlogs = Blog::where('category', $blog->category)
+                        ->where('id', '!=', $blog->id)
+                        ->where('status', 'Published')
+                        ->latest('published_at')
+                        ->take(3)
+                        ->get();
         
         return view('blog.show', compact('blog', 'relatedBlogs'));
     }

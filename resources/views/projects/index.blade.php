@@ -39,23 +39,22 @@
 
             <div class="w-px h-5 bg-gray-200 mx-1"></div>
 
-            {{-- Type filter --}}
-            <select id="type-filter" class="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-dark focus:outline-none focus:border-brand bg-white font-heading font-semibold">
+            {{-- Type (Classification) filter --}}
+            <select id="type-filter" class="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-dark focus:outline-none focus:border-brand bg-white font-heading font-semibold capitalize">
                 <option value="">All Types</option>
-                <option>Residential</option>
-                <option>Commercial</option>
-                <option>Industrial</option>
+                {{-- ডাটাবেজে থাকা ইউনিক classification গুলো ডাইনামিকালি ড্রপডাউনে আসবে --}}
+                @foreach($allProjects->pluck('classification')->unique() as $type)
+                    <option value="{{ strtolower($type) }}">{{ $type }}</option>
+                @endforeach
             </select>
 
             {{-- Location filter --}}
-            <select id="location-filter" class="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-dark focus:outline-none focus:border-brand bg-white font-heading font-semibold">
+            <select id="location-filter" class="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-dark focus:outline-none focus:border-brand bg-white font-heading font-semibold capitalize">
                 <option value="">All Locations</option>
-                <option>Dhanmondi</option>
-                <option>Gulshan</option>
-                <option>Uttara</option>
-                <option>Mirpur</option>
-                <option>Bashundhara</option>
-                <option>Mohammadpur</option>
+                {{-- ডাটাবেজে থাকা ইউনিক location গুলো ডাইনামিকালি ড্রপডাউনে আসবে --}}
+                @foreach($allProjects->pluck('location')->unique() as $loc)
+                    <option value="{{ strtolower($loc) }}">{{ $loc }}</option>
+                @endforeach
             </select>
 
             <div class="ml-auto text-xs text-muted font-medium" id="result-count">Showing all projects</div>
@@ -68,54 +67,46 @@
 <section class="py-14 bg-light">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="all-projects" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            @php
-            $allProjects = [
-                ['slug'=>'mbuild-tower-dhanmondi',   'name'=>'mBuild Tower Dhanmondi',    'type'=>'Residential', 'location'=>'Dhanmondi','status'=>'ongoing',   'floors'=>28, 'img'=>'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80'],
-                ['slug'=>'terracotta-commercial-hub','name'=>'Terracotta Commercial Hub',  'type'=>'Commercial',  'location'=>'Gulshan',  'status'=>'ongoing',   'floors'=>15, 'img'=>'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80'],
-                ['slug'=>'skyline-apartments-uttara','name'=>'Skyline Apartments Uttara',  'type'=>'Residential', 'location'=>'Uttara',   'status'=>'ongoing',   'floors'=>18, 'img'=>'https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=600&q=80'],
-                ['slug'=>'bashundhara-heights',      'name'=>'Bashundhara Heights',        'type'=>'Residential', 'location'=>'Bashundhara','status'=>'completed','floors'=>22,'img'=>'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=600&q=80'],
-                ['slug'=>'mirpur-tech-park',         'name'=>'Mirpur Tech Park',           'type'=>'Commercial',  'location'=>'Mirpur',   'status'=>'upcoming',  'floors'=>12, 'img'=>'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80'],
-                ['slug'=>'mohammadpur-residency',    'name'=>'Mohammadpur Residency',      'type'=>'Residential', 'location'=>'Mohammadpur','status'=>'completed','floors'=>10,'img'=>'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=600&q=80'],
-                ['slug'=>'gulshan-corporate-tower',  'name'=>'Gulshan Corporate Tower',    'type'=>'Commercial',  'location'=>'Gulshan',  'status'=>'completed', 'floors'=>20, 'img'=>'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=80'],
-                ['slug'=>'uttara-industrial-hub',    'name'=>'Uttara Industrial Hub',      'type'=>'Industrial',  'location'=>'Uttara',   'status'=>'upcoming',  'floors'=>6,  'img'=>'https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&q=80'],
-                ['slug'=>'dhanmondi-garden-residency','name'=>'Dhanmondi Garden Residency','type'=>'Residential', 'location'=>'Dhanmondi','status'=>'completed', 'floors'=>14, 'img'=>'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=600&q=80'],
-            ];
-            @endphp
 
             @foreach($allProjects as $p)
             <div class="project-card-filter group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl transition-all duration-300 relative"
-                 data-status="{{ $p['status'] }}"
-                 data-type="{{ strtolower($p['type']) }}"
-                 data-location="{{ strtolower($p['location']) }}">
+                 data-status="{{ strtolower($p->status) }}"
+                 data-type="{{ strtolower($p->classification) }}"
+                 data-location="{{ strtolower($p->location) }}">
 
                 <div class="relative overflow-hidden h-52">
-                    <img src="{{ $p['img'] }}" alt="{{ $p['name'] }}" class="project-img w-full h-full object-cover"/>
-                    <span class="absolute top-3 left-3 bg-brand text-white text-xs font-heading font-semibold px-3 py-1 rounded-full capitalize">{{ $p['status'] }}</span>
-                    <span class="absolute top-3 right-3 bg-dark-2/80 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">{{ $p['type'] }}</span>
+                    @if($p->cover_image)
+                        <img src="{{ asset('storage/' . $p->cover_image) }}" alt="{{ $p->name }}" class="project-img w-full h-full object-cover"/>
+                    @else
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="{{ $p->name }}" class="project-img w-full h-full object-cover"/>
+                    @endif
+                    
+                    <span class="absolute top-3 left-3 bg-brand text-white text-xs font-heading font-semibold px-3 py-1 rounded-full capitalize">{{ $p->status }}</span>
+                    <span class="absolute top-3 right-3 bg-dark-2/80 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full capitalize">{{ $p->classification }}</span>
 
                     {{-- Hover overlay with quick specs --}}
                     <div class="absolute inset-0 bg-dark-2/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 px-6">
                         <div class="grid grid-cols-2 gap-3 w-full">
                             <div class="text-center">
-                                <div class="font-heading font-black text-brand text-xl">{{ $p['floors'] }}</div>
+                                <div class="font-heading font-black text-brand text-xl">{{ $p->floors ?? 'N/A' }}</div>
                                 <div class="text-white/70 text-xs">Floors</div>
                             </div>
                             <div class="text-center">
-                                <div class="font-heading font-black text-brand text-xl capitalize">{{ $p['status'] }}</div>
+                                <div class="font-heading font-black text-brand text-xl capitalize">{{ $p->status }}</div>
                                 <div class="text-white/70 text-xs">Status</div>
                             </div>
                         </div>
-                        <a href="{{ route('projects.show', $p['slug']) }}" class="bg-brand hover:bg-brand-dark text-white font-heading font-semibold text-xs px-5 py-2 rounded-lg transition-colors">
+                        <a href="{{ route('projects.show', $p->slug) }}" class="bg-brand hover:bg-brand-dark text-white font-heading font-semibold text-xs px-5 py-2 rounded-lg transition-colors">
                             View Full Details →
                         </a>
                     </div>
                 </div>
 
                 <div class="p-5">
-                    <h3 class="font-heading font-bold text-dark text-base leading-snug mb-1.5">{{ $p['name'] }}</h3>
-                    <div class="flex items-center gap-1.5 text-muted text-xs">
+                    <h3 class="font-heading font-bold text-dark text-base leading-snug mb-1.5 truncate" title="{{ $p->name }}">{{ $p->name }}</h3>
+                    <div class="flex items-center gap-1.5 text-muted text-xs truncate">
                         <svg class="w-3.5 h-3.5 text-brand shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        {{ $p['location'] }}, Dhaka
+                        {{ $p->location }}
                     </div>
                 </div>
             </div>
@@ -181,7 +172,6 @@ statusBtns.forEach(btn => {
         updateButtonUI();
         applyFilters();
         
-        // (Optional) Button-e click korle URL clean rakhar jonno itihas change kora
         const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + (activeStatus !== 'all' ? `?status=${activeStatus}` : '');
         window.history.pushState({path:newUrl}, '', newUrl);
     });

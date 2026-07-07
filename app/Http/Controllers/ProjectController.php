@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
+    public function allProjects()
+    {
+        $allProjects = Project::where('visibility', 'public')
+            ->latest()
+            ->get();
+
+        return view('projects.index', compact('allProjects'));
+    }
     public function index(Request $request)
     {
         $query = Project::query();
@@ -61,10 +69,11 @@ class ProjectController extends Controller
             'cover_image'         => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'gallery'             => 'nullable|array',
             'gallery.*'           => 'image|mimes:jpeg,png,jpg,webp|max:5120',
+            'brochure_file'       => 'nullable|file|mimes:pdf,doc,docx|max:10240',
         ]);
 
         $validated['is_featured'] = $request->has('is_featured');
-        
+
         $validated['amenities'] = json_encode($request->input('amenities', []));
 
         if ($request->hasFile('cover_image')) {
@@ -77,6 +86,9 @@ class ProjectController extends Controller
                 $galleryPaths[] = $file->store('projects/gallery', 'public');
             }
             $validated['gallery'] = json_encode($galleryPaths);
+        }
+        if ($request->hasFile('brochure_file')) {
+            $validated['brochure_file'] = $request->file('brochure_file')->store('projects/brochures', 'public');
         }
 
         Project::create($validated);
@@ -121,6 +133,7 @@ class ProjectController extends Controller
             'cover_image'         => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'gallery'             => 'nullable|array',
             'gallery.*'           => 'image|mimes:jpeg,png,jpg,webp|max:5120',
+            'brochure_file'       => 'nullable|file|mimes:pdf,doc,docx|max:10240',
         ]);
 
         $validated['is_featured'] = $request->has('is_featured');
@@ -146,6 +159,13 @@ class ProjectController extends Controller
                 $galleryPaths[] = $file->store('projects/gallery', 'public');
             }
             $validated['gallery'] = json_encode($galleryPaths);
+        }
+
+        if ($request->hasFile('brochure_file')) {
+            if ($project->brochure_file) {
+                Storage::disk('public')->delete($project->brochure_file);
+            }
+            $validated['brochure_file'] = $request->file('brochure_file')->store('projects/brochures', 'public');
         }
 
         $project->update($validated);
@@ -175,7 +195,10 @@ class ProjectController extends Controller
 
     public function show($slug)
     {
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::where('slug', $slug)
+            ->where('visibility', 'public')
+            ->firstOrFail();
+
         return view('projects.show', compact('project'));
     }
 }
