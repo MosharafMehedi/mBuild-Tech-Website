@@ -14,8 +14,8 @@ class DashboardController extends Controller
         $totalProjects = Project::count();
         $newProjectsThisMonth = Project::where('created_at', '>=', Carbon::now()->startOfMonth())->count();
 
-        $activeLeads = Contact_us::where('status', 'active')->count();
-        $newLeadsThisWeek = Contact_us::where('status', 'active')
+        $activeLeads = Contact_us::where('status', 'unread')->count();
+        $newLeadsThisWeek = Contact_us::where('status', 'unread')
             ->where('created_at', '>=', Carbon::now()->startOfWeek())
             ->count();
 

@@ -12,7 +12,7 @@
         rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('images/fav.png') }}" type="image/png">
     <script>
         tailwind.config = {
             theme: {
@@ -211,10 +211,8 @@
         {{-- Logo --}}
         <div class="px-5 py-5 border-b border-white/10 shrink-0">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2.5">
-                <div class="w-9 h-9 bg-brand rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M3 3h4v18H3V3zm7 0h4v18h-4V3zm7 6h4v12h-4V9z" />
-                    </svg>
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center">
+                    <img src="{{ asset('images/fav.png') }}" alt="Logo" class="w-5 h-5 object-contain">
                 </div>
                 <div>
                     <p class="font-heading font-black text-white text-sm leading-none"><span
@@ -303,16 +301,26 @@
             </a>
 
             {{-- Settings --}}
-            {{-- <a href="{{ route('admin.settings') }}" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.settings') ? 'active text-brand' : '' }}">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            Site Settings
-        </a> --}}
+            {{-- <a href="{{ route('admin.settings') }}"
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium {{ request()->routeIs('admin.settings') ? 'active text-brand' : '' }}">
+                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Site Settings
+            </a> --}}
 
             {{-- View Website --}}
-            {{-- <a href="{{ route('home') }}" target="_blank" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-            View Website
-        </a> --}}
+            {{-- <a href="{{ route('home') }}" target="_blank"
+                class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/70 text-sm font-medium">
+                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                View Website
+            </a> --}}
         </nav>
 
         {{-- Logout --}}
@@ -337,81 +345,89 @@
 
         {{-- Topbar --}}
         <header class="sticky top-0 z-20 bg-white border-b border-gray-200 shadow-sm">
-    <div class="flex items-center justify-between px-4 sm:px-6 h-14">
+            <div class="flex items-center justify-between px-4 sm:px-6 h-14">
 
-        <div class="flex items-center gap-4">
-            {{-- Hamburger (mobile) --}}
-            <button onclick="openSidebar()" class="lg:hidden text-muted hover:text-dark p-1">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
+                <div class="flex items-center gap-4">
+                    {{-- Hamburger (mobile) --}}
+                    <button onclick="openSidebar()" class="lg:hidden text-muted hover:text-dark p-1">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
 
-            {{-- Page title / breadcrumb --}}
-            <div>
-                <h1 class="font-heading font-bold text-dark text-base md:text-lg">@yield('page-title', 'Dashboard')</h1>
-                @hasSection('breadcrumb')
-                    <p class="text-muted text-xs hidden sm:block">@yield('breadcrumb')</p>
-                @endif
-            </div>
-        </div>
-
-        <div class="flex items-center gap-2 sm:gap-3">
-            
-            {{-- Visit Site Button (সব স্ক্রিনের জন্য রেসপনসিভ করা হলো) --}}
-            <a href="{{ url('/') }}" target="_blank" 
-               class="flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg hover:text-brand hover:border-brand hover:bg-brand/5 transition-colors" 
-               title="Visit Site">
-                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span class="hidden sm:inline">Visit Site</span>
-            </a>
-
-            {{-- Notifications --}}
-            <button class="relative p-2 text-muted hover:text-dark rounded-lg hover:bg-gray-100 transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-brand rounded-full"></span>
-            </button>
-
-            {{-- User dropdown --}}
-            <div class="relative" id="user-dropdown-wrap">
-                <button onclick="toggleUserMenu()" class="flex items-center gap-2 p-1.5 rounded-xl hover:bg-gray-100 transition-colors">
-                    <div class="w-8 h-8 rounded-full bg-brand/20 flex items-center justify-center">
-                        <span class="font-heading font-black text-brand text-sm">A</span>
+                    {{-- Page title / breadcrumb --}}
+                    <div>
+                        <h1 class="font-heading font-bold text-dark text-base md:text-lg">
+                            @yield('page-title', 'Dashboard')</h1>
+                        @hasSection('breadcrumb')
+                            <p class="text-muted text-xs hidden sm:block">@yield('breadcrumb')</p>
+                        @endif
                     </div>
-                    <svg class="w-4 h-4 text-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div id="user-dropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-1 z-50">
-                    <div class="px-4 py-3 border-b border-gray-100">
-                        <p class="text-dark text-sm font-semibold">Admin User</p>
-                        <p class="text-muted text-xs">admin@mbuildtech.com</p>
+                </div>
+
+                <div class="flex items-center gap-2 sm:gap-3">
+
+                    {{-- Visit Site Button (সব স্ক্রিনের জন্য রেসপনসিভ করা হলো) --}}
+                    <a href="{{ url('/') }}" target="_blank"
+                        class="flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 text-xs font-medium text-gray-600 border border-gray-200 rounded-lg hover:text-brand hover:border-brand hover:bg-brand/5 transition-colors"
+                        title="Visit Site">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        <span class="hidden sm:inline">Visit Site</span>
+                    </a>
+
+                    {{-- Notifications --}}
+                    <button
+                        class="relative p-2 text-muted hover:text-dark rounded-lg hover:bg-gray-100 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-brand rounded-full"></span>
+                    </button>
+
+                    {{-- User dropdown --}}
+                    <div class="relative" id="user-dropdown-wrap">
+                        <button onclick="toggleUserMenu()"
+                            class="flex items-center gap-2 p-1.5 rounded-xl hover:bg-gray-100 transition-colors">
+                            <div class="w-8 h-8 rounded-full bg-brand/20 flex items-center justify-center">
+                                <span class="font-heading font-black text-brand text-sm">A</span>
+                            </div>
+                            <svg class="w-4 h-4 text-muted shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="user-dropdown"
+                            class="hidden absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-1 z-50">
+                            <div class="px-4 py-3 border-b border-gray-100">
+                                <p class="text-dark text-sm font-semibold">Admin User</p>
+                                <p class="text-muted text-xs">admin@mbuildtech.com</p>
+                            </div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full text-left px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">Logout</button>
+                            </form>
+                        </div>
                     </div>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="w-full text-left px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">Logout</button>
-                    </form>
                 </div>
             </div>
-        </div>
-    </div>
-</header>
+        </header>
 
         {{-- Flash Messages --}}
         @if (session('success'))
             <div class="mx-4 sm:mx-6 mt-4 bg-green-50 border border-green-200 text-green-800 text-sm rounded-xl px-4 py-3 flex items-center gap-2"
                 id="flash-success">
-                <svg class="w-4 h-4 text-green-600 shrink-0" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
+                <svg class="w-4 h-4 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
                 {{ session('success') }}
-                <button onclick="this.parentElement.remove()"
-                    class="ml-auto text-green-600 hover:text-green-800">×</button>
+                <button onclick="this.parentElement.remove()" class="ml-auto text-green-600 hover:text-green-800">×</button>
             </div>
         @endif
         @if (session('error'))
@@ -422,8 +438,7 @@
                         d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 {{ session('error') }}
-                <button onclick="this.parentElement.remove()"
-                    class="ml-auto text-red-600 hover:text-red-800">×</button>
+                <button onclick="this.parentElement.remove()" class="ml-auto text-red-600 hover:text-red-800">×</button>
             </div>
         @endif
 
@@ -435,7 +450,8 @@
         {{-- Footer --}}
         <footer class="px-6 py-3 border-t border-gray-200 bg-white">
             <p class="text-muted text-xs text-center">© {{ date('Y') }} mBuild Tech Admin Panel · Developed by
-                <span class="text-brand font-semibold">Mysoft Heaven (BD) Ltd.</span></p>
+                <span class="text-brand font-semibold">Mysoft Heaven (BD) Ltd.</span>
+            </p>
         </footer>
     </div>
 
@@ -465,7 +481,7 @@
         function toggleUserMenu() {
             document.getElementById('user-dropdown').classList.toggle('hidden');
         }
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             const wrap = document.getElementById('user-dropdown-wrap');
             if (wrap && !wrap.contains(e.target)) {
                 document.getElementById('user-dropdown').classList.add('hidden');

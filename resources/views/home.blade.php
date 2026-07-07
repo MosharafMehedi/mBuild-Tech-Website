@@ -108,7 +108,7 @@
 
 
     {{-- ===== 3. AT A GLANCE – COUNTER STATS ===== --}}
-    <section class="bg-light pt-36 md:pt-40">
+    <section class="bg-light pt-36 md:pt-40 pb-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 fade-in mt-12 md:mt-0">
                 <p class="text-brand font-heading font-semibold text-xs uppercase tracking-widest mb-2">Enterprise Value
@@ -139,7 +139,7 @@
 
 
     {{-- ===== 4. PROJECTS GRID – INTERACTIVE TABS ===== --}}
-    <section id="projects" class="py-8 bg-white">
+    <section id="projects" class="py-6 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
                 <div class="fade-in">
@@ -243,7 +243,7 @@
 
 
     {{-- ===== 5. CORE COMPETENCIES / SERVICES ===== --}}
-    <section class="bg-light">
+    <section class="bg-light py-4">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-14 fade-in">
                 <p class="text-brand font-heading font-semibold text-xs uppercase tracking-widest mb-2">Our Expertise</p>
