@@ -84,3 +84,5 @@ Route::post('/contacts/{id}/mark-read', [ContactUsController::class, 'markRead']
     Route::put('/testimonials/{testimonial}',            [TestimonialController::class, 'update'])->name('admin.testimonials.update');
     Route::patch('/testimonials/{testimonial}/toggle',   [TestimonialController::class, 'toggle'])->name('admin.testimonials.toggle');
     Route::delete('/testimonials/{testimonial}',         [TestimonialController::class, 'destroy'])->name('admin.testimonials.destroy');
+
+    require __DIR__.'/auth.php';
